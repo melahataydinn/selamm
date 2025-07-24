@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beni Özledin mi?</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffccd5, #ff99ac);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 3em;
+      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+      animation: glow 1.5s ease-in-out infinite alternate;
+      z-index: 10;
+    }
+
+    .heart-emoji {
+      font-size: 5rem;
+      animation: beat 1s infinite;
+      filter: drop-shadow(0 0 10px #ff69b4);
+      z-index: 10;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff1493;
+      }
+      to {
+        text-shadow: 0 0 20px #ff69b4, 0 0 30px #ff1493, 0 0 40px #c71585;
+      }
+    }
+
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.4);
+      }
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+      z-index: 10;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #fff;
+      text-shadow: 0 0 5px #ff1493;
+      position: relative;
+    }
+
+    #yesBtn {
+      background: #ff69b4;
+      box-shadow: 0 0 15px #ff1493;
+    }
+
+    #yesBtn:hover {
+      background: #ff1493;
+      transform: scale(1.1);
+    }
+
+    #noBtn {
+      background: #ff69b4;
+      box-shadow: 0 0 15px #ff1493;
+      cursor: pointer;
+    }
+
+    #noBtn:hover {
+      background: #555;
+      box-shadow: 0 0 15px #333;
+    }
+
+    #photo {
+      display: none; /* Başlangıçta fotoğraf gizli */
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #ff69b4;
+      max-width: 300px;
+      z-index: 10;
+    }
+
+    .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 5;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: radial-gradient(circle, #fff, #ff69b4);
+      border-radius: 50%;
+      box-shadow: 0 0 20px #ff69b4, 0 0 30px #ff1493;
+      animation: sparkle 1.2s infinite;
+      opacity: 0;
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1.3); }
+      100% { opacity: 0; transform: scale(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="sparkles" id="sparkles"></div>
+
+  <h1 id="title">Beni Özledin mi?</h1>
+  <div class="heart-emoji" id="heart">💗</div>
+
+  <div class="buttons" id="buttons">
+    <button id="yesBtn">Evet</button>
+    <button id="noBtn">Hayır</button>
+  </div>
+
+<img id="photo" src="https://i.ibb.co/bj1cDPVM/9ba.png" alt="Senin Fotoğrafın">
+
+
+
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const photo = document.getElementById('photo');
+    const sparklesContainer = document.getElementById('sparkles');
+    const title = document.getElementById('title');
+    const heart = document.getElementById('heart');
+    const buttons = document.getElementById('buttons');
+
+    noBtn.addEventListener('click', () => {
+      noBtn.style.background = '#555';
+      noBtn.style.boxShadow = '0 0 15px #333';
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = Math.random() * maxX + 'px';
+      noBtn.style.top = Math.random() * maxY + 'px';
+    });
+
+    yesBtn.addEventListener('click', () => {
+      title.style.display = 'none'; // Başlığı gizle
+      heart.style.display = 'none'; // Kalp emojisini gizle
+      buttons.style.display = 'none'; // Butonları gizle
+      photo.style.display = 'block'; // Fotoğrafı göster
+    });
+
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.left = Math.random() * 100 + 'vw';
+      sparkle.style.top = Math.random() * 100 + 'vh';
+      sparkle.style.animationDelay = Math.random() * 1.2 + 's';
+      sparklesContainer.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 1200);
+    }
+
+    setInterval(createSparkle, 80);
+  </script>
+</body>
+</html>
